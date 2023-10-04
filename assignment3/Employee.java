@@ -16,6 +16,7 @@ public class Employee {
     public String getEmployeeID(){return employeeID;}
     public double getGrossSalary(){return grossSalary;}
     public double getNetSalary(){return TruncateValue.toDouble((grossSalary - (grossSalary * 0.1)), TruncationLevel);}
+    public void setName(String newName){this.name = newName;}
 
     public String toString(){
         return String.format("%s's gross salary is %.2f SEK per month.", name, grossSalary);
@@ -30,4 +31,5 @@ public class Employee {
         Employee otherEmployee = (Employee) obj;
         return this.employeeID.equals(otherEmployee.employeeID);
     }
+    
 }
