@@ -7,11 +7,7 @@ public class Manager extends Employee {
         super(employeeID, name, grossSalary);
         this.degree = degree;
     }
-    public double calcNetSalary(){
-        double netSalary = 0;
-        if (degree.equals("BSc")){
-            netSalary = 
-        }
+    public String getDegree() {
+        return degree;
     }
-    getNetSalary;
 }

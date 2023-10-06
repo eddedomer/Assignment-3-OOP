@@ -5,15 +5,15 @@ import java.util.HashMap;
 
 public class Company {
     private Employee employee;
-    private HashMap<String,Employee> allEmployees;
+    private HashMap<String,Employee> employees;
 
     public Company(){
-        allEmployees = new HashMap<>();
+        employees = new HashMap<>();
     }
     public String createEmployee(String employeeID, String name, double grossSalary, String degree, String department){
         String message = "";
         if (!(employeeID.isEmpty() || name.isEmpty())){
-            allEmployees.put(employeeID, new Employee(employeeID, name, grossSalary));
+            employees.put(employeeID, new Employee(employeeID, name, grossSalary));
             message = String.format("Employee %s was registered successfully.", employeeID);
         }
         return message;
@@ -21,39 +21,39 @@ public class Company {
     public String createEmployee(String employeeID, String name, double grossSalary, String degree){
         String message = "";
         if (!(employeeID.isEmpty() || name.isEmpty())){
-            allEmployees.put(employeeID, new Employee(employeeID, name, grossSalary));
+            employees.put(employeeID, new Manager(employeeID, name, grossSalary));
             message = String.format("Employee %s was registered successfully.", employeeID);
         }
         return message;
     }
     public String createEmployee(String employeeID, String name, double grossSalary, int GPA){
         String message = "";
-        allEmployees.put(employeeID, new Intern)
+        employees.put(employeeID)
         return message;
     }
     public String createEmployee(String employeeID, String name, double grossSalary){
         String message = "";
         if (!(employeeID.isEmpty() || name.isEmpty())){
-            allEmployees.put(employeeID, new Employee(employeeID, name, grossSalary));
+            employees.put(employeeID, new Employee(employeeID, name, grossSalary));
             message = String.format("Employee %s was registered successfully.", employeeID);
         }
         return message;
     }
     public String removeEmployee(String employeeID){
-        if(allEmployees.get(employeeID) != null){
-            allEmployees.remove(employeeID);
+        if(employees.get(employeeID) != null){
+            employees.remove(employeeID);
             return String.format("Employee %s was successfully removed.", employeeID);
         }
         return  null;
     }
     public String printEmployee(String employeeID){
-        return "" + allEmployees.get(employeeID);
+        return "" + employees.get(employeeID);
     }
     public double getNetSalary(String employeeID){
-        return allEmployees.get(employeeID).getNetSalary();
+        return employees.get(employeeID).getNetSalary();
     }
     public void updateName(String employeeID, String newName){
-        allEmployees.get(newName).setName(newName);
+        employees.get(employeeID).setName(newName);
     }
 
 
