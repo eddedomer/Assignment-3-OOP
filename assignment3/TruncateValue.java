@@ -1,6 +1,6 @@
 package assignment3;
 
-public class TruncateValue {¨
+public class TruncateValue {
     //trunkerar en double till "truncateTo" numret man ger. 2 = 2 decimaler. 0 = 0 decimaler etc...
     public static double toDouble(double Value, int truncateTo){
         return (int)(Value * exponentPower(10, truncateTo))/exponentPower(10, truncateTo);
