@@ -3,23 +3,96 @@ public class Employee {
     //EID = Employee ID
     private String employeeID;
     private String name;
-    private double grossSalary;
+    private double initialSalary;
+    private double bonusSalary;
+    private double netSalary;
 
     final int TruncationLevel = 2;
+    final double BScMultiplier = 0.1;
+    final double MScMultiplier = 0.2;
+    final double PhDMultiplier = 0.35;
+    final int directorBonus = 5000;
+    final int studentBonus = 1000;
+
+    final int highTaxBracket = 50000;
+    final int lowTaxBracket = 30000;
+
+    final double standardTax = 0.1;
+    final double middleTax = 0.2;
+    final double highTax = 0.4;
+
     
-    public Employee(String employeeID, String name, double grossSalary){
+    public Employee(String employeeID, String name, double initialSalary){
         this.employeeID = employeeID;
         this.name = name;
-        this.grossSalary = TruncateValue.toDouble(grossSalary, TruncationLevel);
+        this.initialSalary = TruncateValue.toDouble(initialSalary, TruncationLevel);
     }
     public String getName(){return name;}
     public String getEmployeeID(){return employeeID;}
-    public double getGrossSalary(){return grossSalary;}
-    public double getNetSalary(){return TruncateValue.toDouble((grossSalary - (grossSalary * 0.1)), TruncationLevel);}
+    public double getInitialSalary(){return initialSalary;}
+    public double getGrossSalary(){return TruncateValue.toDouble((initialSalary + calcSalary()), TruncationLevel);}
+    public double getNetSalary(){return TruncateValue.toDouble((getGrossSalary() - calcTax()), TruncationLevel);}
+
     public void setName(String newName){this.name = newName;}
 
+    public double calcTax(){
+        double gross = getGrossSalary();
+        if (!(this instanceof Director)){
+            if (this instanceof Intern){
+                return 0;
+            } else {
+                return (gross)*standardTax;
+            }
+        } else {
+            if (gross > highTaxBracket){
+                return (lowTaxBracket * middleTax) + (gross - lowTaxBracket)*highTax;
+            } else if (gross >= lowTaxBracket){
+                return (gross * middleTax);
+            } else{
+                return (gross) * standardTax;
+            }
+
+        }
+    }
+    public double calcSalary(){
+        double bonus = 0;
+        double initSalary = getInitialSalary();
+        String degree = "";
+        System.out.println(initSalary);
+        if ((this instanceof Director)||(this instanceof Manager)){
+            
+            if (this instanceof Manager){
+                 degree = ((Manager)this).getDegree();
+            } else {
+                 degree = ((Director)this).getDegree();
+            } if (degree.equals("BSc")){
+                bonus = initSalary * BScMultiplier;
+            }
+            else if (degree.equals("MSc")){
+                bonus = initSalary * MScMultiplier;
+            }
+            else if (degree.equals("PhD")){
+                bonus = initSalary * PhDMultiplier;
+            }
+            if (this instanceof Director){
+                bonus += directorBonus;
+            }
+        } else if (this instanceof Intern){
+            int GPA = ((Intern) this).getGPA();
+            if (GPA >= 8){
+                bonus = studentBonus;
+            } else if ((GPA > 5) && (GPA < 8)){
+                bonus = 0;
+            } else {
+                bonus = -initSalary;
+            }
+        }
+        System.out.println(bonus);
+        return bonus;
+    }
+
     public String toString(){
-        return String.format("%s's gross salary is %.2f SEK per month.", name, grossSalary);
+        return String.format("%s's gross salary is %.2f SEK per month.", name, getGrossSalary());
     }
     public boolean equals(Object obj){
         if (this == obj){
@@ -33,5 +106,6 @@ public class Employee {
     }
     public void setGrossSalary(double newGrossSalary) {
     }
+    
     
 }

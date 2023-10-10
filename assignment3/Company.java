@@ -3,23 +3,24 @@ import java.util.Map;
 import java.util.Collections;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Comparator;
 
 public class Company {
     private Employee employee;
-    private HashMap<String, Employee> employees;
+    private LinkedHashMap<String, Employee> employees;
     
     
     public Company() {
-        employees = new HashMap<>();
+        employees = new LinkedHashMap<>();
     }
 
-    public String createEmployee(String employeeID, String name, double grossSalary, String degree, String department) {
+    public String createEmployee(String employeeID, String name, double grossSalary, String degree, String department) { //director
         String message = "";
         if (!(employeeID.isEmpty() || name.isEmpty())) {
-            employees.put(employeeID, new Employee(employeeID, name, grossSalary));
+            employees.put(employeeID, new Director(employeeID, name, grossSalary, degree, department));
             message = String.format("Employee %s was registered successfully.", employeeID);
         }
         return message;
@@ -36,8 +37,9 @@ public class Company {
 
     public String createEmployee(String employeeID, String name, double grossSalary, int GPA){
         String message = "";
-        employees.put(employeeID, new Intern(employeeID, name, grossSalary, GPA));
+       employees.put(employeeID, new Intern(employeeID, name, grossSalary, GPA));
         message = String.format("Employee %s was registered successfully.", employeeID);
+
         return message;
     }
 
@@ -54,8 +56,8 @@ public class Company {
         if (employees.get(employeeID) != null) {
             employees.remove(employeeID);
             return String.format("Employee %s was successfully removed.", employeeID);
-        }
-        return null;
+       }
+       return null;
     }
 
     public String printEmployee(String employeeID) {
@@ -68,6 +70,16 @@ public class Company {
 
     public void updateName(String employeeID, String newName) {
         employees.get(employeeID).setName(newName);
+    }
+
+    public String printAllEmployees(){
+        String message = "All registered employees:\n";
+        
+        for (Employee employee : employees.values()){
+
+            message += employee.toString() + "\n";
+        }
+        return message;
     }
 
     //// Här kommer mina koder /////
@@ -160,6 +172,7 @@ public class Company {
                     case "PhD":
                         phdCount++;
                         break;
+                    default:
                 }
             } else if (emp instanceof Director) {
                 String degree = ((Director) emp).getDegree();
@@ -173,16 +186,19 @@ public class Company {
                     case "PhD":
                         phdCount++;
                         break;
+                    default:
                 }
             }
         }
 
-        degreeCount.put("BSc", bscCount);
-        degreeCount.put("MSc", mscCount);
-        degreeCount.put("PhD", phdCount);
+        if (bscCount > 0) {degreeCount.put("BSc", bscCount);}
+        if (mscCount > 0) {degreeCount.put("MSc", mscCount);}
+        if (phdCount > 0) {degreeCount.put("PhD", phdCount);}
     
         return degreeCount;
     }
-
+    
+    
+    
     
 }

@@ -15,4 +15,8 @@ public class Intern extends Employee {
     public void setGPA(int newGPA) {
         this.GPA = newGPA;
     }
+    @Override
+    public String toString(){
+        return String.format("%s's gross salary is %.2f SEK per month. GPA: %s", getName(), getGrossSalary(), GPA);
+    }
 }

@@ -25,4 +25,8 @@ public class Director extends Employee {
     public void setDegree(String newDegree) {
         this.degree = newDegree;
     }
+    @Override
+    public String toString(){
+        return String.format("%s %s's gross salary is %.2f SEK per month. Dept: %s", degree, getName(), getGrossSalary(), department);
+    }
 }
