@@ -10,4 +10,8 @@ public class Manager extends Employee {
     public String getDegree() {
         return degree;
     }
+    public void setDegree(String newDegree) {
+        this.degree = newDegree;
+    }
+    
 }

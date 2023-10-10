@@ -16,18 +16,18 @@ public class SalaryCalc{
     public double calcSalary(Employee emp){
         if (emp instanceof Manager){
             String degree = ((Manager)emp).getDegree();
-            if (degree == "BSc"){
+            if ("BSc".equals(degree)){
                 return emp.getGrossSalary() * BScMultiplier;
             }
-            else if (degree == "MSc"){
+            else if ("MSc".equals(degree)){
                 return emp.getGrossSalary() * MScMultiplier;
             }
-            else if (degree == "PhD"){
+            else if ("PhD".equals(degree)){
                 return emp.getGrossSalary() * PhDMultiplier;
             }
         } else if (emp instanceof Director){
 
-        } else if (emp instanceof intern){
+        } else if (emp instanceof Intern){
             
         }
         return 0;

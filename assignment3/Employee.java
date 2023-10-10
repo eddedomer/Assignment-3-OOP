@@ -31,5 +31,7 @@ public class Employee {
         Employee otherEmployee = (Employee) obj;
         return this.employeeID.equals(otherEmployee.employeeID);
     }
+    public void setGrossSalary(double newGrossSalary) {
+    }
     
 }
