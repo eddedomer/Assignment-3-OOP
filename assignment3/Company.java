@@ -138,7 +138,7 @@ public class Company {
         Employee employee = employees.get(employeeID);
         if (employee != null) {
             employee.setGrossSalary(newGrossSalary);
-            System.out.println("Employee " + employeeID + "'s gross salary was updated to " + newGrossSalary + " SEK per month.");
+            System.out.println("Employee " + employeeID + " was updated successfully.");
         } 
     }
     
@@ -146,7 +146,7 @@ public class Company {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Manager) {
             ((Manager) employee).setDegree(newDegree);
-            System.out.println("Employee " + employeeID + "'s degree was updated to " + newDegree + ".");
+            System.out.println("Employee " + employeeID + " was updated successfully.");
         } 
     }
     
@@ -154,7 +154,7 @@ public class Company {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Director) {
             ((Director) employee).setDepartment(newDepartment);
-            System.out.println("Employee " + employeeID + "'s department was updated to " + newDepartment + ".");
+            System.out.println("Employee " + employeeID + " was updated successfully.");
         } 
     }
     
@@ -162,7 +162,7 @@ public class Company {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Intern) {
             ((Intern) employee).setGPA(newGPA);
-            System.out.println("Employee " + employeeID + "'s GPA was updated to " + newGPA + ".");
+            System.out.println("Employee " + employeeID + " was updated successfully.");
         } 
     }
 
