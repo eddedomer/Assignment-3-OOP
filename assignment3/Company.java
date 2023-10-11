@@ -109,12 +109,11 @@ public class Company {
         for (Employee employee : employees.values()) {
             totalNetSalary += employee.getNetSalary();
         }
-
         String formattedTotal = String.format("Total net salary: %.2f SEK", TruncateValue.toDouble(totalNetSalary, 2));
         return formattedTotal;
     }
 
-    public String getEmployeesSortedByGrossSalary() {
+    public String printSortedEmployees() {
         String result = "Employees sorted by gross salary (ascending order):";
 
         List<Employee> sortedEmployees = new ArrayList<>(employees.values());
@@ -127,29 +126,44 @@ public class Company {
         return result;
     }
 
-    public String updateEmployeeInformation(String employeeID, String newName, double newGrossSalary, String newDegree, String newDepartment, int newGPA) {
+    public void updateEmployeeName(String employeeID, String newName) {
         Employee employee = employees.get(employeeID);
-
         if (employee != null) {
-            if (employee instanceof Manager) {
-                Manager manager = (Manager) employee;
-                manager.setDegree(newDegree);
-            } else if (employee instanceof Director) {
-                Director director = (Director) employee;
-                director.setDegree(newDegree);
-                director.setDepartment(newDepartment);
-            } else if (employee instanceof Intern) {
-                Intern intern = (Intern) employee;
-                intern.setGPA(newGPA);
-            }
-
             employee.setName(newName);
+            System.out.println("Employee " + employeeID + " was updated successfully.");
+        } 
+    }
+    
+    public void updateGrossSalary(String employeeID, double newGrossSalary) {
+        Employee employee = employees.get(employeeID);
+        if (employee != null) {
             employee.setGrossSalary(newGrossSalary);
-
-            return "Employee " + employeeID + " was updated successfully.";
-        } else {
-            return "Employee " + employeeID + " was not found.";
-        }
+            System.out.println("Employee " + employeeID + "'s gross salary was updated to " + newGrossSalary + " SEK per month.");
+        } 
+    }
+    
+    public void updateManagerDegree(String employeeID, String newDegree) {
+        Employee employee = employees.get(employeeID);
+        if (employee instanceof Manager) {
+            ((Manager) employee).setDegree(newDegree);
+            System.out.println("Employee " + employeeID + "'s degree was updated to " + newDegree + ".");
+        } 
+    }
+    
+    public void updateDirectorDept(String employeeID, String newDepartment) {
+        Employee employee = employees.get(employeeID);
+        if (employee instanceof Director) {
+            ((Director) employee).setDepartment(newDepartment);
+            System.out.println("Employee " + employeeID + "'s department was updated to " + newDepartment + ".");
+        } 
+    }
+    
+    public void updateInternGPA(String employeeID, int newGPA) {
+        Employee employee = employees.get(employeeID);
+        if (employee instanceof Intern) {
+            ((Intern) employee).setGPA(newGPA);
+            System.out.println("Employee " + employeeID + "'s GPA was updated to " + newGPA + ".");
+        } 
     }
 
     public Map<String, Integer> mapEachDegree() {
