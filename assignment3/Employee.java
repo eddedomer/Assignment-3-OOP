@@ -31,7 +31,9 @@ public class Employee {
     public String getEmployeeID(){return employeeID;}
     public double getInitialSalary(){return initialSalary;}
     public double getGrossSalary(){return TruncateValue.toDouble((initialSalary + calcSalary()), TruncationLevel);}
-    public double getNetSalary(){return TruncateValue.toDouble((getGrossSalary() - calcTax()), TruncationLevel);}
+    public double getNetSalary(){return TruncateValue.toDouble(getNetSalaryInternal(), TruncationLevel);}    
+    public double getNetSalaryInternal(){return getGrossSalary() - calcTax();}
+
 
     public void setName(String newName){this.name = newName;}
 
@@ -105,6 +107,7 @@ public class Employee {
         return this.employeeID.equals(otherEmployee.employeeID);
     }
     public void setGrossSalary(double newGrossSalary) {
+        initialSalary = newGrossSalary;
     }
     
     

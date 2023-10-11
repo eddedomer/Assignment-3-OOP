@@ -103,14 +103,14 @@ public class Company {
 
     }
 
-    public String getTotalNetSalary() {
+    public double getTotalNetSalary() {
         double totalNetSalary = 0.0;
 
         for (Employee employee : employees.values()) {
-            totalNetSalary += employee.getNetSalary();
+            totalNetSalary = totalNetSalary + employee.getNetSalaryInternal();
         }
-        String formattedTotal = String.format("Total net salary: %.2f SEK", TruncateValue.toDouble(totalNetSalary, 2));
-        return formattedTotal;
+        
+        return TruncateValue.toDouble(totalNetSalary, 2);
     }
 
     public String printSortedEmployees() {
@@ -151,6 +151,9 @@ public class Company {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Manager) {
             ((Manager) employee).setDegree(newDegree);
+            return "Employee " + employeeID + " was updated successfully";
+        } else if (employee instanceof Director) {
+            ((Director) employee).setDegree(newDegree);
             return "Employee " + employeeID + " was updated successfully";
         } else {
             return null;
