@@ -122,48 +122,59 @@ public class Company {
         for (Employee emp : sortedEmployees) {
             result += "\n" + emp.toString();
         }
+        result += "\n";
 
         return result;
     }
 
-    public void updateEmployeeName(String employeeID, String newName) {
+    public String updateEmployeeName(String employeeID, String newName) {
         Employee employee = employees.get(employeeID);
         if (employee != null) {
             employee.setName(newName);
-            System.out.println("Employee " + employeeID + " was updated successfully.");
-        } 
+            return "Employee " + employeeID + " was updated successfully";
+        } else {
+            return null;
+        }
     }
     
-    public void updateGrossSalary(String employeeID, double newGrossSalary) {
+    public String updateGrossSalary(String employeeID, double newGrossSalary) {
         Employee employee = employees.get(employeeID);
         if (employee != null) {
             employee.setGrossSalary(newGrossSalary);
-            System.out.println("Employee " + employeeID + " was updated successfully.");
-        } 
+            return "Employee " + employeeID + " was updated successfully";
+        } else {
+            return null;
+        }
     }
     
-    public void updateManagerDegree(String employeeID, String newDegree) {
+    public String updateManagerDegree(String employeeID, String newDegree) {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Manager) {
             ((Manager) employee).setDegree(newDegree);
-            System.out.println("Employee " + employeeID + " was updated successfully.");
-        } 
+            return "Employee " + employeeID + " was updated successfully";
+        } else {
+            return null;
+        }
     }
     
-    public void updateDirectorDept(String employeeID, String newDepartment) {
+    public String updateDirectorDept(String employeeID, String newDepartment) {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Director) {
             ((Director) employee).setDepartment(newDepartment);
-            System.out.println("Employee " + employeeID + " was updated successfully.");
-        } 
+            return "Employee " + employeeID + " was updated successfully";
+        } else {
+         return null;
+        }
     }
     
-    public void updateInternGPA(String employeeID, int newGPA) {
+    public String updateInternGPA(String employeeID, int newGPA) {
         Employee employee = employees.get(employeeID);
         if (employee instanceof Intern) {
             ((Intern) employee).setGPA(newGPA);
-            System.out.println("Employee " + employeeID + " was updated successfully.");
-        } 
+            return "Employee " + employeeID + " was updated successfully";
+        } else {
+            return null;
+        }
     }
 
     public Map<String, Integer> mapEachDegree() {

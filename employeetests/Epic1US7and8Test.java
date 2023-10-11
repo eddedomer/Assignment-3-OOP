@@ -57,7 +57,7 @@ public class Epic1US7and8Test {
                 "Angel's gross salary is 28500.10 SEK per month. GPA: 7"  + EOL +
                 "MSc Elektra's gross salary is 47000.60 SEK per month. Dept: Business" + EOL +
                 "PhD Blanca's gross salary is 65750.00 SEK per month. Dept: Human Resources" + EOL;
-
+                
         assertEquals(expectedPrint, facade.printSortedEmployees());
     }
 }
