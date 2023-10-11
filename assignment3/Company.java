@@ -2,6 +2,7 @@ package assignment3;
 import java.util.Map;
 import java.util.Collections;
 import java.io.StringWriter;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.HashMap;
@@ -12,7 +13,15 @@ public class Company {
     private Employee employee;
     private LinkedHashMap<String, Employee> employees;
     
-    
+   // Design Task 2 - Factory of Employees:
+   // One of the challenges in a hierarchy of classes is to define the Creator, which is the responsibility to create instances of many subclasses in a Hierarchy. 
+   // A clean solution is to apply a design pattern that creates an abstraction whose single responsibility is to create the correct instances of subclasses to be used. 
+   // This abstraction is called a Factory Method.
+   // To complete this design task, you must:
+   // Implement a Factory Method in your project for the responsibility to create all different types of employees.
+   // Write the “Section 4” in your individual report.
+
+
     public Company() {
         employees = new LinkedHashMap<>();
     }
@@ -226,7 +235,48 @@ public class Company {
         return degreeCount;
     }
     
+    public String promoteToManager(String employeeID, String degree) {
+        Employee oldEmployee = employees.get(employeeID);
+        if (oldEmployee == null) {
+            return null;
+        }
+        String name = oldEmployee.getName();
+        double rawGrossSalary = oldEmployee.getInitialSalary();
+        Manager newManager = new Manager(employeeID, name, rawGrossSalary, degree);
+        employees.remove(employeeID);
+        employees.put(employeeID, newManager);
     
+        return employeeID + " promoted successfully to Manager.";
+    }
+    
+    public String promoteToDirector(String employeeID, String degree, String department) {
+        Employee oldEmployee = employees.get(employeeID);
+        if (oldEmployee == null) {
+            return null;
+        }
+        String name = oldEmployee.getName();
+        double rawGrossSalary = oldEmployee.getInitialSalary();
+        Director newDirector = new Director(employeeID, name, rawGrossSalary, degree, department);
+        employees.remove(employeeID);
+        employees.put(employeeID, newDirector);
+        
+    
+        return  employeeID + " promoted successfully to Director.";
+    }
+    
+    public String promoteToIntern(String employeeID, int GPA) {
+        Employee oldEmployee = employees.get(employeeID);
+        if (oldEmployee == null) {
+            return null;
+        }
+        String name = oldEmployee.getName();
+        double rawGrossSalary = oldEmployee.getInitialSalary();
+        Intern newIntern = new Intern(employeeID, name, rawGrossSalary, GPA);
+        employees.remove(employeeID);
+        employees.put(employeeID, newIntern);
+    
+        return employeeID + " promoted successfully to Intern.";
+    }
     
     
 }

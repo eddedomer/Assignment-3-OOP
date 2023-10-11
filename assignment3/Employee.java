@@ -4,8 +4,7 @@ public class Employee {
     private String employeeID;
     private String name;
     private double initialSalary;
-    private double bonusSalary;
-    private double netSalary;
+
 
     final int TruncationLevel = 2;
     final double BScMultiplier = 0.1;
@@ -106,9 +105,12 @@ public class Employee {
         Employee otherEmployee = (Employee) obj;
         return this.employeeID.equals(otherEmployee.employeeID);
     }
+    
+    
     public void setGrossSalary(double newGrossSalary) {
         initialSalary = newGrossSalary;
     }
-    
+
+  
     
 }
