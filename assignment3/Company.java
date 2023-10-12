@@ -1,5 +1,9 @@
 package assignment3;
 import java.util.Map;
+
+import assignment3.Expections.EmployeeNotFoundException;
+import assignment3.Expections.NoEmployeeException;
+
 import java.util.Collections;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
@@ -26,7 +30,10 @@ public class Company {
         employees = new LinkedHashMap<>();
     }
 
-    public String createEmployee(String employeeID, String name, double grossSalary, String degree, String department) { //director
+    public String createEmployee(ArrayList<Object> allt){
+        return null;
+    }
+    /*public String createEmployee(String employeeID, String name, double grossSalary, String degree, String department) { //director
         String message = "";
         if (!(employeeID.isEmpty() || name.isEmpty())) {
             employees.put(employeeID, new Director(employeeID, name, grossSalary, degree, department));
@@ -59,18 +66,23 @@ public class Company {
             message = String.format("Employee %s was registered successfully.", employeeID);
         }
         return message;
-    }
+    }*/
 
-    public String removeEmployee(String employeeID) {
-        if (employees.get(employeeID) != null) {
+    public String removeEmployee(String employeeID) throws EmployeeNotFoundException {
+        if (employees.get(employeeID) == null){
+            throw new EmployeeNotFoundException(employeeID);
+        }else {
             employees.remove(employeeID);
             return String.format("Employee %s was successfully removed.", employeeID);
        }
-       return null;
     }
 
-    public String printEmployee(String employeeID) {
+    public String printEmployee(String employeeID) throws EmployeeNotFoundException {
+       if (employees.get(employeeID) == null){
+        throw new EmployeeNotFoundException(employeeID);
+       } else {
         return "" + employees.get(employeeID);
+       }
     }
 
     public double getNetSalary(String employeeID) {
@@ -81,7 +93,11 @@ public class Company {
         employees.get(employeeID).setName(newName);
     }
 
-    public String printAllEmployees(){
+    public String printAllEmployees() throws NoEmployeeException{
+    
+    if (employees.isEmpty()){
+        throw new NoEmployeeException();
+    } else{
         String message = "All registered employees:\n";
         
         for (Employee employee : employees.values()){
@@ -89,7 +105,9 @@ public class Company {
             message += employee.toString() + "\n";
         }
         return message;
+        }
     }
+    
 
     //// Här kommer mina koder /////
 
@@ -101,18 +119,24 @@ public class Company {
 
     
 
-    public String getAllEmployeesAsString() {
-        String result = "All registered employees:";
+    public String getAllEmployeesAsString()throws NoEmployeeException{
+        if (employees.isEmpty()){
+            throw new NoEmployeeException();
+        } else{
+            String result = "All registered employees:";
 
         for (Employee employee : employees.values()) {
             result += "\n" + employee.toString();
         }
 
         return result;
-
+    }
     }
 
-    public double getTotalNetSalary() {
+    public double getTotalNetSalary() throws NoEmployeeException{
+        if (employees.isEmpty()){
+            throw new NoEmployeeException();
+        } else {
         double totalNetSalary = 0.0;
 
         for (Employee employee : employees.values()) {
@@ -121,8 +145,13 @@ public class Company {
         
         return TruncateValue.toDouble(totalNetSalary, 2);
     }
+    }
 
-    public String printSortedEmployees() {
+    public String printSortedEmployees() throws NoEmployeeException {
+        if(employees.isEmpty()){
+            throw new NoEmployeeException();
+        } else{
+
         String result = "Employees sorted by gross salary (ascending order):";
 
         List<Employee> sortedEmployees = new ArrayList<>(employees.values());
@@ -134,6 +163,7 @@ public class Company {
         result += "\n";
 
         return result;
+    }
     }
 
     public String updateEmployeeName(String employeeID, String newName) {
@@ -189,13 +219,13 @@ public class Company {
         }
     }
 
-    public String promoteToManager(String empID, String degree){
+   /*public String promoteToManager(String empID, String degree){
         HashMap <String, Object> savedInfo = saveInfo(empID);
         removeEmployee(empID);
         
 
         return null;
-    }
+    }*/
     public HashMap<String, Object> saveInfo(String empID){
         HashMap<String, Object> savedInfo = new HashMap<>();
         Employee emp = employees.get(empID);
@@ -205,7 +235,10 @@ public class Company {
         return savedInfo;
     }
 
-    public Map<String, Integer> mapEachDegree() {
+    public Map<String, Integer> mapEachDegree() throws NoEmployeeException {
+      if (employees.isEmpty()){
+        throw new NoEmployeeException();
+      } else {
         Map<String, Integer> degreeCount = new HashMap<>();
         
         int bscCount = 0;
@@ -250,8 +283,10 @@ public class Company {
     
         return degreeCount;
     }
+}
     
-    public String promoteToManager(String employeeID, String degree) {
+    public String promoteToManager(String employeeID, String degree) throws InvalidDegreeException {
+        if 
         Employee oldEmployee = employees.get(employeeID);
         if (oldEmployee == null) {
             return null;
