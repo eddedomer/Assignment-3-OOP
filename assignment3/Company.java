@@ -2,7 +2,9 @@ package assignment3;
 import java.util.Map;
 
 import assignment3.Expections.EmployeeNotFoundException;
+import assignment3.Expections.InvalidEmployeeDataException;
 import assignment3.Expections.NoEmployeeException;
+import assignment3.Expections.RepeatedIDException;
 
 import java.util.Collections;
 import java.io.StringWriter;
@@ -30,43 +32,39 @@ public class Company {
         employees = new LinkedHashMap<>();
     }
 
-    public String createEmployee(ArrayList<Object> allt){
-        return null;
-    }
-    /*public String createEmployee(String employeeID, String name, double grossSalary, String degree, String department) { //director
-        String message = "";
-        if (!(employeeID.isEmpty() || name.isEmpty())) {
-            employees.put(employeeID, new Director(employeeID, name, grossSalary, degree, department));
-            message = String.format("Employee %s was registered successfully.", employeeID);
+
+    public String createEmployee (String employeeID, String name, double grossSalary, String degree, String department)throws Exception { //director
+        if (!(employees.get(employeeID) == null)){
+            throw new RepeatedIDException(employeeID);
+        } else {
+            employees.put(employeeID, EmployeeFactory.createDirector(employeeID, name, grossSalary, degree, department));
+        return CompanyMessages.creationSuccessfull(employeeID);
         }
-        return message;
     }
-
-    public String createEmployee(String employeeID, String name, double grossSalary, String degree) {
-        String message = "";
-        if (!(employeeID.isEmpty() || name.isEmpty())) {
-            employees.put(employeeID, new Manager(employeeID, name, grossSalary, degree));
-            message = String.format("Employee %s was registered successfully.", employeeID);
+    public String createEmployee(String employeeID, String name, double grossSalary, String degree)throws Exception {
+        if (!(employees.get(employeeID) == null)){
+            throw new RepeatedIDException(employeeID);
+        } else {
+            employees.put(employeeID, EmployeeFactory.createManager(employeeID, name, grossSalary, degree));
+        return CompanyMessages.creationSuccessfull(employeeID);
         }
-        return message;
     }
-
-    public String createEmployee(String employeeID, String name, double grossSalary, int GPA){
-        String message = "";
-       employees.put(employeeID, new Intern(employeeID, name, grossSalary, GPA));
-        message = String.format("Employee %s was registered successfully.", employeeID);
-
-        return message;
-    }
-
-    public String createEmployee(String employeeID, String name, double grossSalary) {
-        String message = "";
-        if (!(employeeID.isEmpty() || name.isEmpty())) {
-            employees.put(employeeID, new Employee(employeeID, name, grossSalary));
-            message = String.format("Employee %s was registered successfully.", employeeID);
+    public String createEmployee(String employeeID, String name, double grossSalary, int GPA)throws Exception{
+        if (!(employees.get(employeeID) == null)){
+            throw new RepeatedIDException(employeeID);
+        } else {
+            employees.put(employeeID, EmployeeFactory.createIntern(employeeID, name, grossSalary, GPA));
+        return CompanyMessages.creationSuccessfull(employeeID);
         }
-        return message;
-    }*/
+    }
+    public String createEmployee(String employeeID, String name, double grossSalary)throws Exception {
+        if (!(employees.get(employeeID) == null)){
+            throw new RepeatedIDException(employeeID);
+        } else{
+            employees.put(employeeID, EmployeeFactory.createEmployee(employeeID, name, grossSalary));
+        return CompanyMessages.creationSuccessfull(employeeID);
+        }
+    }
 
     public String removeEmployee(String employeeID) throws EmployeeNotFoundException {
         if (employees.get(employeeID) == null){
@@ -85,12 +83,12 @@ public class Company {
        }
     }
 
-    public double getNetSalary(String employeeID) {
+    public double getNetSalary(String employeeID) throws Exception{
+        if (employees.get(employeeID) == null) {
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         return employees.get(employeeID).getNetSalary();
-    }
-
-    public void updateName(String employeeID, String newName) {
-        employees.get(employeeID).setName(newName);
+        }
     }
 
     public String printAllEmployees() throws NoEmployeeException{
@@ -166,57 +164,69 @@ public class Company {
     }
     }
 
-    public String updateEmployeeName(String employeeID, String newName) {
+    public String updateEmployeeName(String employeeID, String newName) throws Exception {
         Employee employee = employees.get(employeeID);
-        if (employee != null) {
+        if (employee == null) {
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
             employee.setName(newName);
-            return "Employee " + employeeID + " was updated successfully";
-        } else {
-            return null;
+            return CompanyMessages.updateSuccessfull(employeeID);
         }
     }
     
-    public String updateGrossSalary(String employeeID, double newGrossSalary) {
+    public String updateGrossSalary(String employeeID, double newGrossSalary) throws Exception{
         Employee employee = employees.get(employeeID);
-        if (employee != null) {
+        if (employee == null) {
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
             employee.setGrossSalary(newGrossSalary);
-            return "Employee " + employeeID + " was updated successfully";
-        } else {
-            return null;
+                return CompanyMessages.updateSuccessfull(employeeID);
         }
     }
     
-    public String updateManagerDegree(String employeeID, String newDegree) {
+    public String updateManagerDegree(String employeeID, String newDegree) throws Exception{
         Employee employee = employees.get(employeeID);
+        if (employee == null) {
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         if (employee instanceof Manager) {
             ((Manager) employee).setDegree(newDegree);
-            return "Employee " + employeeID + " was updated successfully";
+            return CompanyMessages.updateSuccessfull(employeeID);
         } else if (employee instanceof Director) {
             ((Director) employee).setDegree(newDegree);
-            return "Employee " + employeeID + " was updated successfully";
+            return CompanyMessages.updateSuccessfull(employeeID);
         } else {
             return null;
         }
+        } 
     }
     
-    public String updateDirectorDept(String employeeID, String newDepartment) {
+    public String updateDirectorDept(String employeeID, String newDepartment) throws Exception {
         Employee employee = employees.get(employeeID);
+        if (employee == null) {
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         if (employee instanceof Director) {
             ((Director) employee).setDepartment(newDepartment);
-            return "Employee " + employeeID + " was updated successfully";
+            return CompanyMessages.updateSuccessfull(employeeID);
         } else {
          return null;
         }
     }
+    }
     
-    public String updateInternGPA(String employeeID, int newGPA) {
+    public String updateInternGPA(String employeeID, int newGPA) throws Exception {
         Employee employee = employees.get(employeeID);
+        if (employee == null) {
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         if (employee instanceof Intern) {
             ((Intern) employee).setGPA(newGPA);
-            return "Employee " + employeeID + " was updated successfully";
+            return CompanyMessages.updateSuccessfull(employeeID);
         } else {
             return null;
         }
+    }
     }
 
    /*public String promoteToManager(String empID, String degree){
@@ -285,12 +295,11 @@ public class Company {
     }
 }
     
-    public String promoteToManager(String employeeID, String degree) throws InvalidDegreeException {
-        if 
+    public String promoteToManager(String employeeID, String degree) throws Exception{
         Employee oldEmployee = employees.get(employeeID);
         if (oldEmployee == null) {
-            return null;
-        }
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         String name = oldEmployee.getName();
         double rawGrossSalary = oldEmployee.getInitialSalary();
         Manager newManager = new Manager(employeeID, name, rawGrossSalary, degree);
@@ -298,13 +307,14 @@ public class Company {
         employees.put(employeeID, newManager);
     
         return employeeID + " promoted successfully to Manager.";
+        }
     }
     
-    public String promoteToDirector(String employeeID, String degree, String department) {
+    public String promoteToDirector(String employeeID, String degree, String department) throws Exception{
         Employee oldEmployee = employees.get(employeeID);
         if (oldEmployee == null) {
-            return null;
-        }
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         String name = oldEmployee.getName();
         double rawGrossSalary = oldEmployee.getInitialSalary();
         Director newDirector = new Director(employeeID, name, rawGrossSalary, degree, department);
@@ -313,13 +323,14 @@ public class Company {
         
     
         return  employeeID + " promoted successfully to Director.";
+        }
     }
     
-    public String promoteToIntern(String employeeID, int GPA) {
+    public String promoteToIntern(String employeeID, int GPA) throws Exception{
         Employee oldEmployee = employees.get(employeeID);
         if (oldEmployee == null) {
-            return null;
-        }
+            throw new EmployeeNotFoundException(employeeID);
+        } else {
         String name = oldEmployee.getName();
         double rawGrossSalary = oldEmployee.getInitialSalary();
         Intern newIntern = new Intern(employeeID, name, rawGrossSalary, GPA);
@@ -327,7 +338,9 @@ public class Company {
         employees.put(employeeID, newIntern);
     
         return employeeID + " promoted successfully to Intern.";
+        }
     }
+    
     
     
 }

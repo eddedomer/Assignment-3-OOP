@@ -1,4 +1,7 @@
 package assignment3;
+
+import assignment3.Expections.InvalidEmployeeDataException;
+
 public class Employee {
     //EID = Employee ID
     private String employeeID;
@@ -21,10 +24,18 @@ public class Employee {
     final double highTax = 0.4;
 
     
-    public Employee(String employeeID, String name, double initialSalary){
+    public Employee(String employeeID, String name, double initialSalary) throws InvalidEmployeeDataException{
+        if (employeeID.isEmpty()){
+            throw new InvalidEmployeeDataException("ID cannot be blank.");
+        } else if (name.trim().isEmpty()){
+            throw new InvalidEmployeeDataException("Name cannot be blank.");
+        } else if (initialSalary <= 0){
+            throw new InvalidEmployeeDataException("Salary must be greater than zero.");
+        }else {
         this.employeeID = employeeID;
         this.name = name;
         this.initialSalary = TruncateValue.toDouble(initialSalary, TruncationLevel);
+        }
     }
     public String getName(){return name;}
     public String getEmployeeID(){return employeeID;}
@@ -33,12 +44,22 @@ public class Employee {
     public double getNetSalary(){return TruncateValue.toDouble(getNetSalaryInternal(), TruncationLevel);}    
     public double getNetSalaryInternal(){return getGrossSalary() - calcTax();}
 
-    public void setGrossSalary(double newGrossSalary) {
+    public void setGrossSalary(double newGrossSalary) throws InvalidEmployeeDataException {
+        if (newGrossSalary <= 0){
+            throw new InvalidEmployeeDataException("Salary must be greater than zero.");
+        } else{
         initialSalary = newGrossSalary;
+        }
     }
 
 
-    public void setName(String newName){this.name = newName;}
+    public void setName(String newName) throws InvalidEmployeeDataException {
+        if (newName.trim().isEmpty()){
+            throw new InvalidEmployeeDataException("Name cannot be blank.");
+        } else {
+        this.name = newName;
+        }
+    }
 
     public double calcTax(){
         double gross = getGrossSalary();

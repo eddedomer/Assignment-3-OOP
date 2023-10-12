@@ -1,10 +1,12 @@
 package assignment3;
 
+import assignment3.Expections.InvalidEmployeeDataException;
+
 public class Manager extends Employee {
     private String degree;
     
     
-    public Manager(String employeeID, String name, double grossSalary, String degree){
+    public Manager(String employeeID, String name, double grossSalary, String degree)throws InvalidEmployeeDataException{
         super(employeeID, name, grossSalary);
         this.degree = degree; 
     }

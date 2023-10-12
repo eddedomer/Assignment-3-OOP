@@ -1,9 +1,11 @@
 package assignment3;
 
+import assignment3.Expections.InvalidEmployeeDataException;
+
 public class Intern extends Employee {
     private int GPA;
 
-    public Intern(String employeeID, String name, double grossSalary, int GPA) {
+    public Intern(String employeeID, String name, double grossSalary, int GPA)throws InvalidEmployeeDataException {
         super(employeeID, name, grossSalary);
         this.GPA = GPA;
     }
