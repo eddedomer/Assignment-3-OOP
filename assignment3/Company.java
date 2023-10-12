@@ -189,6 +189,22 @@ public class Company {
         }
     }
 
+    public String promoteToManager(String empID, String degree){
+        HashMap <String, Object> savedInfo = saveInfo(empID);
+        removeEmployee(empID);
+        
+
+        return null;
+    }
+    public HashMap<String, Object> saveInfo(String empID){
+        HashMap<String, Object> savedInfo = new HashMap<>();
+        Employee emp = employees.get(empID);
+        savedInfo.put("name", emp.getName());
+        savedInfo.put("initSalary", emp.getInitialSalary());
+
+        return savedInfo;
+    }
+
     public Map<String, Integer> mapEachDegree() {
         Map<String, Integer> degreeCount = new HashMap<>();
         
