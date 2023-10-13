@@ -1,4 +1,4 @@
-package assignment3;
+/*package assignment3;
 public class SalaryCalc{
 
     private double salaryBonus;
@@ -7,7 +7,7 @@ public class SalaryCalc{
     final double BScMultiplier = 0.1;
     final double MScMultiplier = 0.2;
     final double PhDMultiplier = 0.35;
-    final int directorBonus = 5000;
+    final int DIRECTOR_BONUS = 5000;
     final int studentBonus = 1000;
 
     final int highTaxBracket = 50000;
@@ -72,3 +72,4 @@ public class SalaryCalc{
         }
     }
 }
+*/

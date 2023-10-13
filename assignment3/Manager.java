@@ -4,30 +4,37 @@ import assignment3.Expections.InvalidEmployeeDataException;
 
 public class Manager extends Employee {
     private String degree;
-    
-    
-    public Manager(String employeeID, String name, double grossSalary, String degree)throws InvalidEmployeeDataException{
+
+    //Using 
+    private final String BSC_TERM = "BSc";
+    private final String MSC_TERM = "MSc";
+    private final String PHD_TERM = "PhD";
+
+    public Manager(String employeeID, String name, double grossSalary, String degree)
+            throws InvalidEmployeeDataException {
         super(employeeID, name, grossSalary);
-        this.degree = degree; 
+        if ((!degree.equals(BSC_TERM) && !degree.equals(MSC_TERM) && !degree.equals(PHD_TERM))) {
+            throw new InvalidEmployeeDataException("Degree must be one of the options: BSc, MSc or PhD.");
+        } else {
+            this.degree = degree;
+        }
     }
+
     public String getDegree() {
         return degree;
     }
-    
-    public void setDegree(String newDegree) {
-        this.degree = newDegree;
+
+    public void setDegree(String newDegree) throws InvalidEmployeeDataException {
+        if (!newDegree.equals(BSC_TERM) && !newDegree.equals(MSC_TERM) && !newDegree.equals(PHD_TERM)) {
+            throw new InvalidEmployeeDataException("Degree must be one of the options: BSc, MSc or PhD.");
+        } else {
+            this.degree = newDegree;
+        }
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%s %s's gross salary is %.2f SEK per month.", degree, getName(), getGrossSalary());
     }
-    
+
 }
-// String representation for Managers:
-// <degree> <name>’s gross salary is <gross_salary> SEK per month.
-
-// String representation for Directors (note: all in the same line):
-//<degree> <name>’s gross salary is <gross_salary> SEK per month. Dept: <department>
-
-// String representation for Interns:
-// <name>’s gross salary is <gross_salary> SEK per month. GPA: <gpa>
