@@ -9,8 +9,3 @@ we decided to do it togheter.
 
 For the Epic Feature 2
 Daniel created the classes and Edvin implemented them.
-
-
-
-
-
