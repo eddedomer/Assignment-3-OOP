@@ -51,7 +51,7 @@ public class Company {
             double totalNetSalary = 0.0;
 
             for (Employee employee : employees.values()) {
-                totalNetSalary = totalNetSalary + employee.getNetSalaryInternal();
+                totalNetSalary = totalNetSalary + employee.getNetSalaryNO_TRUNCATION();
             }
 
             return TruncateValue.toDouble(totalNetSalary, 2); //uses the TruncateValue.toDouble method to truncate the value to 2 decimalpoints
@@ -227,7 +227,7 @@ public class Company {
                 }
             }
 
-            if (bscCount > 0) {
+            if (bscCount > 0) { //if there is noone with this degree we dont want to add that key to the hashmap. 
                 degreeCount.put("BSc", bscCount);
             }
             if (mscCount > 0) {

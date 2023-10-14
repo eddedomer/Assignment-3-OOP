@@ -7,19 +7,25 @@ public class Employee {
     private String name;
     private double initialSalary;
 
-    final int TRUNCATION_LEVEL = 2;
-    final double BSC_MULTIPLIER = 0.1;
-    final double MSC_MULTIPLIER = 0.2;
-    final double PHD_MULTIPLIER = 0.35;
-    final int DIRECTOR_BONUS = 5000;
-    final int STUDENT_BONUS = 1000;
+    private final int TRUNCATION_LEVEL = 2;
+    private final double BSC_MULTIPLIER = 0.1;
+    private final double MSC_MULTIPLIER = 0.2;
+    private final double PHD_MULTIPLIER = 0.35;
+    private final int DIRECTOR_BONUS = 5000;
+    private final int STUDENT_BONUS = 1000;
 
-    final int HIGH_TAX_BRACKET = 50000;
-    final int LOW_TAX_BRACKET = 30000;
+    private final int HIGH_TAX_BRACKET = 50000;
+    private final int LOW_TAX_BRACKET = 30000;
+    private final int GPA_HIGH = 8;
+    private final int GPA_LOW = 5;
 
-    final double STANDARD_TAX = 0.1;
-    final double MIDDLE_TAX = 0.2;
-    final double HIGH_TAX = 0.4;
+    private final double STANDARD_TAX = 0.1;
+    private final double MIDDLE_TAX = 0.2;
+    private final double HIGH_TAX = 0.4;
+
+    protected final String BSC_TERM = "BSc";
+    protected final String MSC_TERM = "MSc";
+    protected final String PHD_TERM = "PhD";
 
     public Employee(String employeeID, String name, double initialSalary) throws InvalidEmployeeDataException {
         if (employeeID.isEmpty()) {
@@ -35,27 +41,19 @@ public class Employee {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmployeeID() {
-        return employeeID;
-    }
-
-    public double getInitialSalary() {
-        return initialSalary;
-    }
+    public String getName() { return name; }
+    public String getEmployeeID() { return employeeID; }
+    public double getInitialSalary() { return initialSalary;}
 
     public double getGrossSalary() {
-        return TruncateValue.toDouble((initialSalary + calcSalary()), TRUNCATION_LEVEL);
+        return TruncateValue.toDouble((initialSalary + calcBonus()), TRUNCATION_LEVEL); 
     }
 
     public double getNetSalary() {
-        return TruncateValue.toDouble(getNetSalaryInternal(), TRUNCATION_LEVEL);
+        return TruncateValue.toDouble(getNetSalaryNO_TRUNCATION(), TRUNCATION_LEVEL);
     }
 
-    public double getNetSalaryInternal() {
+    public double getNetSalaryNO_TRUNCATION() {
         return getGrossSalary() - calcTax();
     }
 
@@ -78,12 +76,12 @@ public class Employee {
     public double calcTax() {
         double gross = getGrossSalary();
         if (!(this instanceof Director)) {
-            if (this instanceof Intern) {
+            if (this instanceof Intern) { //if Intern. No tax
                 return 0;
-            } else {
+            } else { //Everyone else. Standard Tax
                 return (gross) * STANDARD_TAX;
             }
-        } else {
+        } else { //if director
             if (gross > HIGH_TAX_BRACKET) {
                 return (LOW_TAX_BRACKET * MIDDLE_TAX) + (gross - LOW_TAX_BRACKET) * HIGH_TAX;
             } else if (gross >= LOW_TAX_BRACKET) {
@@ -95,23 +93,18 @@ public class Employee {
         }
     }
 
-    public double calcSalary() {
+    public double calcBonus() {
         double bonus = 0;
         double initSalary = getInitialSalary();
-        String degree = "";
         System.out.println(initSalary);
         if ((this instanceof Director) || (this instanceof Manager)) {
+            String degree = ((Manager) this).getDegree();
 
-            if (this instanceof Manager) {
-                degree = ((Manager) this).getDegree();
-            } else {
-                degree = ((Director) this).getDegree();
-            }
-            if (degree.equals("BSc")) {
+            if (degree.equals(BSC_TERM)) {
                 bonus = initSalary * BSC_MULTIPLIER;
-            } else if (degree.equals("MSc")) {
+            } else if (degree.equals(MSC_TERM)) {
                 bonus = initSalary * MSC_MULTIPLIER;
-            } else if (degree.equals("PhD")) {
+            } else if (degree.equals(PHD_TERM)) {
                 bonus = initSalary * PHD_MULTIPLIER;
             }
             if (this instanceof Director) {
@@ -119,9 +112,9 @@ public class Employee {
             }
         } else if (this instanceof Intern) {
             int GPA = ((Intern) this).getGPA();
-            if (GPA >= 8) {
+            if (GPA >= GPA_HIGH) {
                 bonus = STUDENT_BONUS;
-            } else if ((GPA > 5) && (GPA < 8)) {
+            } else if ((GPA > GPA_LOW) && (GPA < GPA_HIGH)) {
                 bonus = 0;
             } else {
                 bonus = -initSalary;
