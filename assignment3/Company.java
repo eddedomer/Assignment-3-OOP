@@ -269,11 +269,8 @@ public class Company {
         if (employee == null) {
             throw new EmployeeNotFoundException(employeeID);
         } else {
-            if (employee instanceof Manager) {
+            if (employee instanceof Manager || employee instanceof Director) {
                 ((Manager) employee).setDegree(newDegree);
-                return CompanyMessages.updateSuccessfull(employeeID);
-            } else if (employee instanceof Director) {
-                ((Director) employee).setDegree(newDegree);
                 return CompanyMessages.updateSuccessfull(employeeID);
             } else {
                 return null;
