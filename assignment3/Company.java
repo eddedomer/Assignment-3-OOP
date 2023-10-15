@@ -3,7 +3,6 @@ package assignment3;
 import java.util.Map;
 
 import assignment3.Expections.EmployeeNotFoundException;
-import assignment3.Expections.NoEmployeeException;
 import assignment3.Expections.RepeatedIDException;
 
 import java.util.Collections;
@@ -30,9 +29,9 @@ public class Company {
         }
     }
 
-    public String getAllEmployeesAsString() throws NoEmployeeException {
+    public String getAllEmployeesAsString() throws EmployeeNotFoundException {
         if (employees.isEmpty()) { //if no employees are registered. Throw NoEmployeeException. 
-            throw new NoEmployeeException(); 
+            throw new EmployeeNotFoundException(); 
         } else {
             String result = "All registered employees:";
 
@@ -44,9 +43,9 @@ public class Company {
         }
     }
 
-    public double getTotalNetSalary() throws NoEmployeeException {
+    public double getTotalNetSalary() throws EmployeeNotFoundException {
         if (employees.isEmpty()) {
-            throw new NoEmployeeException();
+            throw new EmployeeNotFoundException();
         } else {
             double totalNetSalary = 0.0;
 
@@ -165,10 +164,10 @@ public class Company {
             return "" + employees.get(employeeID);
         }
     }
-    public String printAllEmployees() throws NoEmployeeException {
+    public String printAllEmployees() throws EmployeeNotFoundException {
 
         if (employees.isEmpty()) {
-            throw new NoEmployeeException();
+            throw new EmployeeNotFoundException();
         } else {
             String message = "All registered employees:\n";
 
@@ -179,9 +178,9 @@ public class Company {
             return message;
         }
     }
-    public String printSortedEmployees() throws NoEmployeeException {
+    public String printSortedEmployees() throws EmployeeNotFoundException {
         if (employees.isEmpty()) {
-            throw new NoEmployeeException();
+            throw new EmployeeNotFoundException();
         } else {
 
             String result = "Employees sorted by gross salary (ascending order):";
@@ -199,9 +198,9 @@ public class Company {
         }
     }
     
-    public Map<String, Integer> mapEachDegree() throws NoEmployeeException {
+    public Map<String, Integer> mapEachDegree() throws EmployeeNotFoundException {
         if (employees.isEmpty()) {
-            throw new NoEmployeeException();
+            throw new EmployeeNotFoundException();
         } else {
             Map<String, Integer> degreeCount = new HashMap<>();
 

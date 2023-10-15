@@ -11,7 +11,7 @@ For the Epic Feature 2
 Daniel created the classes and Edvin implemented them.
 
 
-Comments om 1.11 from Edvin
+Comments on 1.11 from Edvin
 we where a little confused since the assignemnt said that we needed 4 different methods for this task but there was no mention
 demmoting an employee to a regular employee. So we did it with 3. one for each type. some issues with this tho is now when we want to 
 uppgrade a manager to an director we have to respecify their degree. this could be solved with an overlaod that only takes a department
