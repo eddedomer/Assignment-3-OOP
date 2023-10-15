@@ -14,7 +14,7 @@ Daniel created the classes and Edvin implemented them.
 Comments on 1.11 from Edvin
 we where a little confused since the assignemnt said that we needed 4 different methods for this task but there was no mention
 demmoting an employee to a regular employee. So we did it with 3. one for each type. some issues with this tho is now when we want to 
-uppgrade a manager to an director we have to respecify their degree. this could be solved with an overlaod that only takes a department
+uppgrade a manager to an director we have to respecify their degree. this could be solved with an overload that only takes a department
 but since there was no mention of this in the assignemnt or tests we did not do that. Also if you go from director to manager you could
 make a method that only removes the department and turns it into a manger without having to specify the degree. 
 
@@ -27,3 +27,23 @@ instead of the already messy three.
 We are not completly happy with the way we did this. I wanted to make a more efficient way to store the data of the old employee
 but since we work with so many different datatypes it was a real mess trying to store it all. so we just stored it in the same method 
 for all of them which is a little bit wet but since there are only 2 variables to be stored we thought of it as fine. 
+
+
+
+
+Comments on 1.11 from Daniel;
+Well we noticed quite fast the limitations of inheritance, though it is great for reuse and creating relationships with classes.
+It is quite hard to justify our trade offs since we had a lot of challanges in managing different types of employees.
+Our inheritance is causing the code to be very dependet of eachother. One example of this is that if we where to add a feature 
+to their shared attributes we need to update both of them. 
+
+As well for the code being hard to update. If we where to introduce new employees this might in some 
+cases be challinging due to the inheritance hiearchy. That in some cases could make us do some exstensive modifications.
+
+And I can't forget to mention that the code also is dublicated. If we look at how we managed the attribute name, is that it is 
+dublicated across multiple classes. To handle the attribute name we would need to change this in each class separately.
+
+For a summary it is important to use inheritance but we've learned that it comes with limitations. But if you know
+your weaknesses you also knows it's limitation. Thinking about the trade offs is important when choosing the design 
+of your project.
+
