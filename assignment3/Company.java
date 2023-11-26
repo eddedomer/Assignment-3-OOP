@@ -15,11 +15,23 @@ import java.util.Comparator;
 public class Company {
     private LinkedHashMap<String, Employee> employees;
 
-  
+    //We used LinkedHashMap so that when we print use the method printAllEmployees it works accordingly to the test. Because it keeps all the items stored in order of creation.
+
+    String lineSeperator = System.lineSeparator();
+    //so we can use lineSeperator instead of \n
+
+    //Messages
+    private String creationSuccessfull(String employeeID){
+        return String.format("Employee %s was registered successfully.",employeeID);
+    }
+    private String updateSuccessfull(String employeeID){
+        return String.format("Employee %s was updated successfully",employeeID);
+    }
     public Company() {
         employees = new LinkedHashMap<>();
     }
 
+    
     //Getters ------------------------------------------------------------------------------------------------------------------
     public double getNetSalary(String employeeID) throws Exception {
         if (employees.get(employeeID) == null) {
@@ -36,7 +48,7 @@ public class Company {
             String result = "All registered employees:";
 
             for (Employee employee : employees.values()) {
-                result += "\n" + employee.toString();
+                result += lineSeperator + employee.toString();
             }
 
             return result;
@@ -53,7 +65,7 @@ public class Company {
                 totalNetSalary = totalNetSalary + employee.getNetSalaryNO_TRUNCATION();
             }
 
-            return TruncateValue.toDouble(totalNetSalary, 2); //uses the TruncateValue.toDouble method to truncate the value to 2 decimalpoints
+            return TruncateValue.truncateToDouble(totalNetSalary, 2); //uses the TruncateValue.truncateToDouble method to truncate the value to 2 decimalpoints
         }
     }
     
@@ -68,7 +80,7 @@ public class Company {
             throw new RepeatedIDException(employeeID);
         } else {
             employees.put(employeeID, EmployeeFactory.createDirector(employeeID, name, grossSalary, degree, department));
-            return CompanyMessages.creationSuccessfull(employeeID);
+            return creationSuccessfull(employeeID);
         }
     }
 
@@ -78,7 +90,7 @@ public class Company {
             throw new RepeatedIDException(employeeID);
         } else {
             employees.put(employeeID, EmployeeFactory.createManager(employeeID, name, grossSalary, degree));
-            return CompanyMessages.creationSuccessfull(employeeID);
+            return creationSuccessfull(employeeID);
         }
     }
     //calls the Intern Factory
@@ -87,7 +99,7 @@ public class Company {
             throw new RepeatedIDException(employeeID);
         } else {
             employees.put(employeeID, EmployeeFactory.createIntern(employeeID, name, grossSalary, GPA));
-            return CompanyMessages.creationSuccessfull(employeeID);
+            return creationSuccessfull(employeeID);
         }
     }
     
@@ -97,7 +109,7 @@ public class Company {
             throw new RepeatedIDException(employeeID);
         } else {
             employees.put(employeeID, EmployeeFactory.createEmployee(employeeID, name, grossSalary));
-            return CompanyMessages.creationSuccessfull(employeeID);
+            return creationSuccessfull(employeeID);
         }
     }
 
@@ -118,7 +130,9 @@ public class Company {
         } else {
             String name = oldEmployee.getName();
             double rawGrossSalary = oldEmployee.getInitialSalary();
-            Manager newManager = new Manager(employeeID, name, rawGrossSalary, degree);
+
+            Employee newManager = EmployeeFactory.createManager(employeeID, name, rawGrossSalary, degree);
+            //Manager newManager = new Manager(employeeID, name, rawGrossSalary, degree);
             employees.remove(employeeID);
             employees.put(employeeID, newManager);
 
@@ -133,7 +147,9 @@ public class Company {
         } else {
             String name = oldEmployee.getName();
             double rawGrossSalary = oldEmployee.getInitialSalary();
-            Director newDirector = new Director(employeeID, name, rawGrossSalary, degree, department);
+
+            Employee newDirector = EmployeeFactory.createDirector(employeeID, name, rawGrossSalary, degree, department);
+            //Director newDirector = new Director(employeeID, name, rawGrossSalary, degree, department);
             employees.remove(employeeID);
             employees.put(employeeID, newDirector);
 
@@ -148,7 +164,10 @@ public class Company {
         } else {
             String name = oldEmployee.getName();
             double rawGrossSalary = oldEmployee.getInitialSalary();
-            Intern newIntern = new Intern(employeeID, name, rawGrossSalary, GPA);
+
+            Employee newIntern = EmployeeFactory.createIntern(employeeID, name, rawGrossSalary, GPA);
+
+           // Intern newIntern = new Intern(employeeID, name, rawGrossSalary, GPA);
             employees.remove(employeeID);
             employees.put(employeeID, newIntern);
 
@@ -169,11 +188,11 @@ public class Company {
         if (employees.isEmpty()) {
             throw new EmployeeNotFoundException();
         } else {
-            String message = "All registered employees:\n";
+            String message = "All registered employees:" + lineSeperator;
 
             for (Employee employee : employees.values()) {
 
-                message += employee.toString() + "\n";
+                message += employee.toString() + lineSeperator;
             }
             return message;
         }
@@ -190,9 +209,9 @@ public class Company {
              // Here I use the Comparator instead of using a sorting algorithm like buble sort. --Learned from https://www.geeksforgeeks.org/comparator-interface-java/
 
             for (Employee emp : sortedEmployees) {
-                result += "\n" + emp.toString();
+                result += lineSeperator + emp.toString();
             }
-            result += "\n";
+            result += lineSeperator;
 
             return result;
         }
@@ -249,7 +268,7 @@ public class Company {
             throw new EmployeeNotFoundException(employeeID);
         } else {
             employee.setName(newName);
-            return CompanyMessages.updateSuccessfull(employeeID);
+            return updateSuccessfull(employeeID);
         }
     }
 
@@ -259,7 +278,7 @@ public class Company {
             throw new EmployeeNotFoundException(employeeID);
         } else {
             employee.setGrossSalary(newGrossSalary);
-            return CompanyMessages.updateSuccessfull(employeeID);
+            return updateSuccessfull(employeeID);
         }
     }
 
@@ -270,7 +289,7 @@ public class Company {
         } else {
             if (employee instanceof Manager || employee instanceof Director) {
                 ((Manager) employee).setDegree(newDegree);
-                return CompanyMessages.updateSuccessfull(employeeID);
+                return updateSuccessfull(employeeID);
             } else {
                 return null;
             }
@@ -284,7 +303,7 @@ public class Company {
         } else {
             if (employee instanceof Director) {
                 ((Director) employee).setDepartment(newDepartment);
-                return CompanyMessages.updateSuccessfull(employeeID);
+                return updateSuccessfull(employeeID);
             } else {
                 return null;
             }
@@ -298,7 +317,7 @@ public class Company {
         } else {
             if (employee instanceof Intern) {
                 ((Intern) employee).setGPA(newGPA);
-                return CompanyMessages.updateSuccessfull(employeeID);
+                return updateSuccessfull(employeeID);
             } else {
                 return null;
             }

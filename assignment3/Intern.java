@@ -19,6 +19,23 @@ public class Intern extends Employee {
 
     public int getGPA() { return GPA; }
 
+    @Override
+    public double getGrossSalary(){
+        double bonus = 0;
+        double grossSalary = getInitialSalary();
+        if (this.GPA >= GPA_HIGH) {
+            bonus = STUDENT_BONUS;
+        } else if (this.GPA <= GPA_LOW) {
+            bonus = - grossSalary;
+        }
+        return TruncateValue.truncateToDouble((grossSalary + bonus), TRUNCATION_LEVEL);
+    }
+
+    @Override
+    public double getNetSalaryNO_TRUNCATION() {
+        return getGrossSalary();
+    }
+
     public void setGPA(int newGPA) throws InvalidEmployeeDataException {
         if ((newGPA < MIN_GPA) || (newGPA > MAX_GPA)){
             throw new InvalidEmployeeDataException(newGPA);

@@ -1,4 +1,42 @@
 # Assignment-3-OOP
+
+Re-exam Added text:
+
+We used inheritance in: 
+Employee class, Manager class, Director Class, and Intern Class. 
+The Manager and Intern class inherits the Employee class. The Director class then inherits the Manager class
+
+The relationship between the Employees and the Company is aggregation
+
+We use polymorphism in:
+The LinkedHashMap were we store the Employees
+Some methods we use it: updateManagerDegree(), updateDirectorDept(), updateInternGPA 
+We also use it when we throw custom Exceptions as an Exception. 
+
+Overiding: 
+We use it in the getNetSalaryNO_TRUNCATION and getGrossSalary methods. 
+
+Overloading: 
+We use it when creating different types of employees with the CreateEmployee method. 
+
+designPattern:
+We use the Factory Method design pattern in the EmployeeFactory class. 
+
+casting: 
+We use casting when we want to access specific methods from a subtype. like the degree of a manager. We also use it to truncate. 
+
+Encapsulation: 
+We dont have unecesary setters. and all attributes are private or protected. 
+
+Abstract classes: 
+The employee factory is abstract. 
+
+Static methods: 
+We have some static methods like all the createEmployee methods in the EmployeeFactroy. 
+
+Re-exam Added text:
+
+
 The third assignment in my OOP Class.
 
 Edvin did tasks: 1.1 to 1.5

@@ -21,6 +21,27 @@ public class Director extends Manager {
     
     public String getDepartment() { return department; }
 
+    @Override
+    public double getGrossSalary() { 
+        double grossSalary = super.getGrossSalary() + DIRECTOR_BONUS;
+        return grossSalary;
+    }
+
+    @Override
+    public double getNetSalaryNO_TRUNCATION(){
+        double grossSalary = getGrossSalary();
+        double netSalary = grossSalary;
+        if (grossSalary > HIGH_TAX_BRACKET) {
+            netSalary -= ((LOW_TAX_BRACKET * MIDDLE_TAX) + (grossSalary - LOW_TAX_BRACKET) * HIGH_TAX);
+        } else if (grossSalary >= LOW_TAX_BRACKET) {
+            netSalary -= ((grossSalary * MIDDLE_TAX));
+        } else {
+            netSalary -= ((grossSalary) * STANDARD_TAX);
+        }
+        return netSalary;
+    }
+
+
     public void setDepartment(String newDepartment) throws InvalidEmployeeDataException {
         if((!newDepartment.equals(TECH_DEP) && !newDepartment.equals(HUM_RSC_DEP) && !newDepartment.equals(BUSS_DEP))){
             throw new InvalidEmployeeDataException(EXCEP_MESSAGE);
